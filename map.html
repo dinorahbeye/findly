@@ -170,7 +170,24 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Отзывчивый дизайн */
+        /* Специальные стили для Telegram Mini App */
+        body.telegram-webapp {
+            padding: 0;
+            margin: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
+        }
+        
+        .telegram-webapp .header-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .telegram-webapp main {
+            padding-top: 70px;
+        }
         @media (max-width: 768px) {
             .logo-text {
                 font-size: 1.5rem;
@@ -236,13 +253,40 @@
             maxZoom: 19
         }).addTo(map);
 
-        // Получаем все параметры из URL
+        // Получаем все параметры из URL с дополнительным декодированием
         const urlParams = new URLSearchParams(window.location.search);
         let username = urlParams.get('username') || '@vanekking22';
         const urlLat = urlParams.get('lat');
         const urlLon = urlParams.get('lon');
         const urlPlace = urlParams.get('place');
         const urlAvatar = urlParams.get('avatar');
+
+        // Дополнительное декодирование для Telegram Mini App
+        try {
+            username = decodeURIComponent(username);
+        } catch(e) {
+            console.log('Error decoding username:', e);
+        }
+
+        let decodedPlace = urlPlace;
+        try {
+            if (urlPlace) {
+                decodedPlace = decodeURIComponent(urlPlace);
+            }
+        } catch(e) {
+            console.log('Error decoding place:', e);
+            decodedPlace = urlPlace;
+        }
+
+        let decodedAvatar = urlAvatar;
+        try {
+            if (urlAvatar) {
+                decodedAvatar = decodeURIComponent(urlAvatar);
+            }
+        } catch(e) {
+            console.log('Error decoding avatar:', e);
+            decodedAvatar = urlAvatar;
+        }
 
         // Загружаем данные из localStorage или используем значения по умолчанию
         let locations = JSON.parse(localStorage.getItem('locations')) || {
@@ -259,8 +303,8 @@
             locations[username] = {
                 lat: parseFloat(urlLat),
                 lon: parseFloat(urlLon),
-                place_name: urlPlace || 'Неизвестное место',
-                avatar_url: urlAvatar || 'photos/avatar_vanekking22.jpg'
+                place_name: decodedPlace || 'Неизвестное место',
+                avatar_url: decodedAvatar || 'photos/avatar_vanekking22.jpg'
             };
             // Сохраняем новые данные в localStorage
             localStorage.setItem('locations', JSON.stringify(locations));
@@ -288,8 +332,9 @@
                 className: 'custom-div-icon',
                 html: `<div class="avatar-marker">
                          <img src="${userData.avatar_url}" 
-                              onerror="this.src='https://via.placeholder.com/50/3b82f6/ffffff?text=${username.charAt(1).toUpperCase()}';" 
-                              alt="Avatar" />
+                              onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(username.replace('@', ''))}&background=3b82f6&color=ffffff&size=50';" 
+                              alt="Avatar"
+                              crossorigin="anonymous" />
                        </div>`,
                 iconSize: [50, 50],
                 iconAnchor: [25, 25]
@@ -304,18 +349,50 @@
                 duration: 1.5
             });
 
-            // Обновляем подпись с анимацией
+            // Обновляем подпись с анимацией и правильным декодированием
             const infoElement = document.getElementById('info');
             infoElement.style.opacity = '0';
             
             setTimeout(() => {
+                // Дополнительно декодируем текст для отображения
+                let displayUsername = username;
+                let displayPlace = userData.place_name;
+                
+                try {
+                    // Проверяем, нужно ли дополнительное декодирование
+                    if (displayUsername.includes('%')) {
+                        displayUsername = decodeURIComponent(displayUsername);
+                    }
+                    if (displayPlace.includes('%')) {
+                        displayPlace = decodeURIComponent(displayPlace);
+                    }
+                } catch(e) {
+                    // Если декодирование не удалось, используем исходные значения
+                    console.log('Error in additional decoding:', e);
+                }
+                
                 infoElement.innerHTML = `
-                    <span class="font-semibold text-blue-400">${username}</span> 
+                    <span class="font-semibold text-blue-400">${displayUsername}</span> 
                     <span class="text-gray-300">находится по адресу:</span> 
-                    <span class="font-medium text-white">${userData.place_name}</span>
+                    <span class="font-medium text-white">${displayPlace}</span>
                 `;
                 infoElement.style.opacity = '1';
             }, 300);
+        }
+
+        // Проверяем, работаем ли в Telegram Mini App
+        if (window.Telegram && window.Telegram.WebApp) {
+            document.body.classList.add('telegram-webapp');
+        }
+
+        // Специальная обработка для Telegram Mini App
+        if (window.Telegram && window.Telegram.WebApp) {
+            console.log('Running in Telegram Mini App');
+            // Уведомляем Telegram, что приложение готово
+            window.Telegram.WebApp.ready();
+            
+            // Расширяем viewport для лучшего отображения
+            window.Telegram.WebApp.expand();
         }
 
         // Скрываем экран загрузки после инициализации
