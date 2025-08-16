@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Findly - Изменить локацию</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background-attachment: fixed;
+        }
+        
+        /* Стильный заголовок */
+        .header-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 1.75rem;
+            letter-spacing: -0.025em;
+        }
+        
+        /* Форма */
+        .form-container {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .input-field {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(30, 41, 59, 1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .input-label {
+            background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Кнопки */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.8);
+            transform: translateY(-1px);
+        }
+        
+        /* Анимация успеха */
+        .success-animation {
+            animation: successPulse 0.6s ease-out;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Футер */
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Отзывчивый дизайн */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex flex-col min-h-screen">
+        <header class="header-gradient p-3 shadow-2xl">
+            <div class="flex items-center justify-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h1 class="logo-text">Изменить локацию</h1>
+                </div>
+            </div>
+        </header>
+        
+        <main class="flex-grow p-4">
+            <div class="max-w-md mx-auto">
+                <div class="form-container rounded-2xl p-6 space-y-4">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <p class="text-gray-400 text-sm">Обновите свое местоположение</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label for="username" class="block text-sm font-medium input-label mb-2">Имя пользователя</label>
+                            <input type="text" id="username" class="input-field w-full p-3 rounded-lg text-white placeholder-gray-500 focus:outline-none text-sm" placeholder="@vanekking22">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label for="lat" class="block text-sm font-medium input-label mb-2">Широта</label>
+                                <input type="text" id="lat" class="input-field w-full p-3 rounded-lg text-white placeholder-gray-500 focus:outline-none text-sm" placeholder="55.7558">
+                            </div>
+                            <div>
+                                <label for="lon" class="block text-sm font-medium input-label mb-2">Долгота</label>
+                                <input type="text" id="lon" class="input-field w-full p-3 rounded-lg text-white placeholder-gray-500 focus:outline-none text-sm" placeholder="37.6173">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="place_name" class="block text-sm font-medium input-label mb-2">Название места</label>
+                            <input type="text" id="place_name" class="input-field w-full p-3 rounded-lg text-white placeholder-gray-500 focus:outline-none text-sm" placeholder="Москва, Красная площадь">
+                        </div>
+                        
+                        <div>
+                            <label for="avatar_url" class="block text-sm font-medium input-label mb-2">URL аватара</label>
+                            <input type="text" id="avatar_url" class="input-field w-full p-3 rounded-lg text-white placeholder-gray-500 focus:outline-none text-sm" placeholder="photos/avatar_vanekking22.jpg">
+                        </div>
+                        
+                        <div class="pt-4 space-y-3">
+                            <button onclick="updateLocation()" class="btn-primary w-full py-3 text-white rounded-lg font-medium text-sm shadow-lg">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Обновить локацию</span>
+                                </div>
+                            </button>
+                            
+                            <button onclick="getCurrentLocation()" class="btn-secondary w-full py-3 text-white rounded-lg font-medium text-sm">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Использовать мое местоположение</span>
+                                </div>
+                            </button>
+                            
+                            <button onclick="shareLocation()" class="btn-secondary w-full py-3 text-white rounded-lg font-medium text-sm">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
+                                    </svg>
+                                    <span>Скопировать ссылку</span>
+                                </div>
+                            </button>
+                            
+                            <a href="map.html" class="block text-center text-blue-400 hover:text-blue-300 text-sm py-2 transition-colors">
+                                ← Вернуться к карте
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer-gradient text-gray-400 text-center p-4 text-sm">
+            <div class="flex items-center justify-center space-x-2">
+                <span>Создано с</span>
+                <div class="w-4 h-4 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <span>для @vanekking22</span>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Загружаем данные из localStorage или используем значения по умолчанию
+        let locations = JSON.parse(localStorage.getItem('locations')) || {
+            '@vanekking22': {
+                lat: 55.7558,
+                lon: 37.6173,
+                place_name: 'Москва, Красная площадь',
+                avatar_url: 'photos/avatar_vanekking22.jpg'
+            }
+        };
+
+        // Получаем username из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username') || '@vanekking22';
+
+        // Заполняем форму текущими данными
+        const userData = locations[username] || {
+            lat: 55.7558,
+            lon: 37.6173,
+            place_name: 'Москва, Красная площадь',
+            avatar_url: 'photos/avatar_vanekking22.jpg'
+        };
+        
+        document.getElementById('username').value = username;
+        document.getElementById('lat').value = userData.lat;
+        document.getElementById('lon').value = userData.lon;
+        document.getElementById('place_name').value = userData.place_name;
+        document.getElementById('avatar_url').value = userData.avatar_url;
+
+        // Функция получения текущего местоположения
+        function getCurrentLocation() {
+            const button = event.target.closest('button');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = `
+                <div class="flex items-center justify-center space-x-2">
+                    <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Определение местоположения...</span>
+                </div>
+            `;
+            button.disabled = true;
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        document.getElementById('lat').value = position.coords.latitude.toFixed(6);
+                        document.getElementById('lon').value = position.coords.longitude.toFixed(6);
+                        
+                        // Можно добавить обратное геокодирование для получения названия места
+                        document.getElementById('place_name').value = 'Определено автоматически';
+                        
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                        
+                        // Анимация успеха
+                        button.classList.add('success-animation');
+                        setTimeout(() => button.classList.remove('success-animation'), 600);
+                    },
+                    function(error) {
+                        alert('Не удалось получить местоположение: ' + error.message);
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                    }
+                );
+            } else {
+                alert('Геолокация не поддерживается вашим браузером');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        }
+
+        // Функция для создания и копирования ссылки
+        function shareLocation() {
+            const button = event.target.closest('button');
+            const originalText = button.innerHTML;
+            
+            const newUsername = document.getElementById('username').value.trim() || '@vanekking22';
+            if (!newUsername.startsWith('@')) {
+                alert('Имя пользователя должно начинаться с @');
+                return;
+            }
+            
+            const lat = parseFloat(document.getElementById('lat').value);
+            const lon = parseFloat(document.getElementById('lon').value);
+            const place_name = document.getElementById('place_name').value.trim();
+            const avatar_url = document.getElementById('avatar_url').value.trim();
+
+            if (isNaN(lat) || isNaN(lon)) {
+                alert('Пожалуйста, введите корректные координаты.');
+                return;
+            }
+
+            // Создаем полную ссылку
+            const baseUrl = window.location.origin + window.location.pathname.replace('change.html', '');
+            const shareableUrl = `${baseUrl}map.html?username=${encodeURIComponent(newUsername)}&lat=${lat}&lon=${lon}&place=${encodeURIComponent(place_name || 'Неизвестное место')}&avatar=${encodeURIComponent(avatar_url || 'photos/avatar_vanekking22.jpg')}`;
+
+            // Копируем в буфер обмена
+            navigator.clipboard.writeText(shareableUrl).then(() => {
+                button.innerHTML = `
+                    <div class="flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Ссылка скопирована!</span>
+                    </div>
+                `;
+                button.classList.add('success-animation');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('success-animation');
+                }, 2000);
+            }).catch(() => {
+                // Fallback для старых браузеров
+                prompt('Скопируйте ссылку:', shareableUrl);
+            });
+        }
+        function updateLocation() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            const newUsername = document.getElementById('username').value.trim() || '@vanekking22';
+            if (!newUsername.startsWith('@')) {
+                alert('Имя пользователя должно начинаться с @');
+                return;
+            }
+            
+            const lat = parseFloat(document.getElementById('lat').value);
+            const lon = parseFloat(document.getElementById('lon').value);
+            const place_name = document.getElementById('place_name').value.trim();
+            const avatar_url = document.getElementById('avatar_url').value.trim();
+
+            if (isNaN(lat) || isNaN(lon)) {
+                alert('Пожалуйста, введите корректные координаты (широта и долгота должны быть числами).');
+                return;
+            }
+
+            // Анимация загрузки
+            button.innerHTML = `
+                <div class="flex items-center justify-center space-x-2">
+                    <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Обновление...</span>
+                </div>
+            `;
+            button.disabled = true;
+
+            // Симулируем задержку для лучшего UX
+            setTimeout(() => {
+                locations[newUsername] = {
+                    lat: lat,
+                    lon: lon,
+                    place_name: place_name || 'Неизвестное место',
+                    avatar_url: avatar_url || 'photos/avatar_vanekking22.jpg'
+                };
+
+                // Сохраняем в localStorage для локального использования
+                localStorage.setItem('locations', JSON.stringify(locations));
+
+                // Создаем полную ссылку с всеми параметрами
+                const shareableUrl = `map.html?username=${encodeURIComponent(newUsername)}&lat=${lat}&lon=${lon}&place=${encodeURIComponent(place_name || 'Неизвестное место')}&avatar=${encodeURIComponent(avatar_url || 'photos/avatar_vanekking22.jpg')}`;
+
+                // Анимация успеха
+                button.innerHTML = `
+                    <div class="flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Успешно обновлено!</span>
+                    </div>
+                `;
+                button.classList.add('success-animation');
+
+                // Перенаправляем на карту через 1.5 секунды
+                setTimeout(() => {
+                    window.location.href = shareableUrl;
+                }, 1500);
+            }, 800);
+        }
+
+        // Добавляем обработчик Enter для формы
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                updateLocation();
+            }
+        });
+    </script>
+</body>
+</html>
